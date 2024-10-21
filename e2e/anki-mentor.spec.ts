@@ -2,26 +2,29 @@ import { test, expect } from "@playwright/test";
 
 test("test", async ({ page }) => {
   await page.goto("https://aaakul.github.io/anki-mentor/");
-  await expect(page.getByText("*Demo*")).toBeVisible();
+  await expect(page.getByText("*Demo version*")).toBeVisible();
   // Japanese by default
+  // Simulate entering words
   await page.getByText("New word").click();
-  await page.getByRole("textbox").fill("Japanses");
+  // test words split function
+  await page.getByRole("textbox").fill("Words,should;be　split、automatically");
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
   await expect(page.locator("#output")).toContainText(
-    "User input: Japanses; Lorem text: あら"
+    "User input: Words,should,be,split,automatically; Lorem text: あら、"
   );
   // Change to English
   await page.getByLabel("setting").locator("svg").click();
   await page.locator("label").filter({ hasText: "English" }).click();
   await page.getByRole("button", { name: "OK" }).click();
-  await page.getByText("Clear all").click(); // Delete word
+  // Clear function
+  await page.getByText("Clear all").click();
   await page.getByText("New word").click();
-  await page.getByRole("textbox").fill("English");
+  await page.getByRole("textbox").fill("Words,should;be　split、automatically");
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
   await expect(page.locator("#output")).toContainText(
-    "User input: English; Lorem text: Lorem"
+    "User input: Words,should,be,split,automatically; Lorem text: Lorem"
   );
   // Copy function
   await page.getByLabel("copy").click();
