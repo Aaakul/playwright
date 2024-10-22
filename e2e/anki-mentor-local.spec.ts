@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
 
 test("test", async ({ page }) => {
-  await page.goto("https://aaakul.github.io/anki-mentor/");
-  await expect(page.getByText("*Demo version*")).toBeVisible();
-  // Japanese by default
+  await page.goto("http://localhost:3000/");
+  await expect(page.getByText("*Development version*")).toBeVisible();
+
+  // Generate Japanese text by default
   // Simulate entering words
   await page.getByText("New word").click();
   // test words split function
@@ -13,7 +14,7 @@ test("test", async ({ page }) => {
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
   await expect(page.locator("#output")).toContainText(
-    "Words: Words,should,be,split,automatically; Regenerate: false; Lorem text: あら、蠍の火"
+    "From backend: Words: Words,should,be,split,automatically; Regenerate: False; Lorem text: あら、蠍の火"
   );
 
   // Change to English
@@ -30,7 +31,7 @@ test("test", async ({ page }) => {
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
   await expect(page.locator("#output")).toContainText(
-    "Words: Words,should,be,split,automatically; Regenerate: false; Lorem text: Lorem, ipsum"
+    "From backend: Words: Words,should,be,split,automatically; Regenerate: False; Lorem text: Lorem, ipsum"
   );
   // Copy function
   await page.getByLabel("copy").click();
@@ -39,7 +40,7 @@ test("test", async ({ page }) => {
   // Regenerate function
   await page.getByLabel("reload").click();
   await expect(page.locator("#output")).toContainText(
-    "Words: Words,should,be,split,automatically; Regenerate: true; Lorem text: Lorem, ipsum"
+    "From backend: Words: Words,should,be,split,automatically; Regenerate: True; Lorem text: Lorem, ipsum"
   );
   await page.getByText("Clear all").click();
 
