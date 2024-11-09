@@ -13,7 +13,7 @@ test("test", async ({ page }) => {
     .fill("Words,should;be　split、 automatically");
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
-  await expect(page.locator("#output")).toContainText(
+  await expect(page.locator(".output-text")).toContainText(
     "From backend: Words: Words,should,be,split,automatically; Regenerate: False; Lorem text: あら、蠍の火"
   );
 
@@ -30,7 +30,7 @@ test("test", async ({ page }) => {
     .fill("Words,should;be　split、automatically ");
   await page.getByRole("textbox").press("Enter");
   await page.getByLabel("send").click();
-  await expect(page.locator("#output")).toContainText(
+  await expect(page.locator(".output-text")).toContainText(
     "From backend: Words: Words,should,be,split,automatically; Regenerate: False; Lorem text: Lorem, ipsum"
   );
   // Copy function
@@ -39,7 +39,7 @@ test("test", async ({ page }) => {
 
   // Regenerate function
   await page.getByLabel("reload").click();
-  await expect(page.locator("#output")).toContainText(
+  await expect(page.locator(".output-text")).toContainText(
     "From backend: Words: Words,should,be,split,automatically; Regenerate: True; Lorem text: Lorem, ipsum"
   );
   await page.getByText("Clear all").click();
